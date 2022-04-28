@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<document type="freeswitch/xml">
+    <X-PRE-PROCESS cmd="set" data="name=freeswitch" />
+    <section name="configuration" description="Minimal FreeSWITCH Configuration">
+        <configuration name="switch.conf" description="Core Configuration">
+            <settings>
+                <param name="switchname" value="$${name}" />
+                <param name="core-db-name" value="/tmp/core-$${name}.db" />
+                <param name="loglevel" value="debug" />
+                <param name="rtp-start-port" value="10000" />
+                <param name="rtp-end-port" value="10010" />
+            </settings>
+        </configuration>
+        <configuration name="modules.conf" description="Modules">
+            <modules>
+                <load module="mod_event_socket" />
+                <load module="mod_commands" />
+                <load module="mod_dialplan_xml" />
+                <load module="mod_dptools" />
+                <load module="mod_sofia" />
+                <load module="mod_tone_stream" />
+                <load module="mod_sndfile" />
+                <load module="mod_conference" />
+                <load module="mod_flite" />
+                <load module="mod_say_en" />
+                <load module="mod_shout" />
+                <load module="mod_soundtouch" />
+                <!-- The following modules are not required by Eqivo but sandbox applications use them -->
+                <load module="mod_http_cache" />
+            </modules>
+        </configuration>
+        <configuration name="event_socket.conf" description="Socket Client">
+            <settings>
+                <param name="nat-map" value="false" />
+                <param name="listen-ip" value="0.0.0.0" />
+                <param name="listen-port" value="8021" />
+                <param name="password" value="ChangeMeESL" />
+                <param name="apply-inbound-acl" value="0.0.0.0/0" />
+            </settings>
+        </configuration>
+        <configuration name="sofia.conf" description="SIP Stack">
+            <profiles>
+                <profile name="main">
+                    <settings>
+                        <param name="auth-calls" value="false" />
+                        <param name="rtp-timer-name" value="soft" />
+                        <param name="liberal-dtmf" value="true" />
+                        <param name="rtp-ip" value="0.0.0.0" />
+                        <param name="sip-ip" value="0.0.0.0" />
+                        <param name="ext-rtp-ip" value="stun:stun.gmx.net" />
+                        <param name="ws-binding" value=":5066" />
+                        <param name="apply-candidate-acl" value="localnet.auto" />
+                        <param name="inbound-codec-prefs" value="PCMU,PCMA" />
+                        <param name="inbound-codec-prefs" value="PCMU,PCMA" />
+                    </settings>
+                </profile>
+            </profiles>
+        </configuration>
+        <configuration name="http_cache.conf" description="HTTP Cache">
+            <settings>
+                <param name="ssl-cacert" value="/etc/ssl/certs/ca-certificates.crt" />
+            </settings>
+        </configuration>
+        <configuration name="conference.conf" description="Conference">
+            <profiles>
+                <profile name="eqivo">
+                    <param name="alone-sound" value="silence_stream://10" />
+                    <param name="sound-prefix" value="$${base_dir}/sounds/en/us/callie" />
+                    <param name="tts-engine" value="flite" />
+                    <param name="tts-voice" value="slt" />
+                </profile>
+            </profiles>
+        </configuration>
+    </section>
+    <section name="directory" description="User Directory">
+        <domain name="localhost">
+            <user id="1001">
+                <params>
+                    <param name="password" value="ChangeMeUser" />
+                    <param name="dial-string" value="{presence_id=${dialed_user}@${dialed_domain}}${sofia_contact(${dialed_user}@${dialed_domain})}" />
+                </params>
+            </user>
+            <user id="1002">
+                <params>
+                    <param name="password" value="ChangeMeUser" />
+                    <param name="dial-string" value="{presence_id=${dialed_user}@${dialed_domain}}${sofia_contact(${dialed_user}@${dialed_domain})}" />
+                </params>
+            </user>
+            <user id="1003">
+                <params>
+                    <param name="password" value="ChangeMeUser" />
+                    <param name="dial-string" value="{presence_id=${dialed_user}@${dialed_domain}}${sofia_contact(${dialed_user}@${dialed_domain})}" />
+                </params>
+            </user>
+            <!-- add more extensions as you see fit -->
+        </domain>
+    </section>
+    <section name="dialplan" description="Regex/XML Dialplan">
+        <context name="default">
+            <!-- 1000-1999 extensions are considered local -->
+            <extension name="local">
+                <condition field="destination_number" expression="^1(\d{3})$">
+                    <action application="info" />
+                    <action application="export" data="dialed_extension=1$1" />
+                    <action application="set" data="hangup_after_bridge=true" />
+                    <action application="bridge" data="user/${dialed_extension}@localhost" />
+                </condition>
+            </extension>
+            <!-- everything else is handled as a generic inbound call and sent to Eqivo -->
+            <extension name="eqivo">
+                <condition field="destination_number" expression="^(.*)$">
+                    <action application="info" />
+                    <action application="enable_heartbeat" data="60" />
+                    <action application="socket" data="${eqivo_local_outbound_socket_address} async full" />
+                </condition>
+            </extension>
+        </context>
+    </section>
+</document>

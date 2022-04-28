@@ -1,0 +1,51 @@
+<html>
+<head>
+    <title>WebPhone | Eqivo Sandbox</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <link href="css/phone.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://jssip.net/download/releases/jssip-3.9.0.js"></script>
+    <script src="js/phone.js"></script>
+<head>
+<body>
+
+<main>
+    <div class="container btn-group-vertical" role="group">
+        <input class="form-control border-dark border-2 text text-end" id="display" readonly>
+        <div class="btn-group">
+            <button type="button" id="answer" class="btn btn-success py-2 border-dark border-2 col-6" onclick="onAnswer()">Answer/Send</button>
+            <button type="button" class="btn btn-danger py-2 border-dark border-2 col-6" onclick="onEnd()">End Call</button>
+        </div>
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary py-2 border-dark border-2 col-4" onclick="onKey('1')">1</button>
+            <button type="button" class="btn btn-primary py-2 border-dark border-2 col-4" onclick="onKey('2')">2<div class="alt">ABC</div></button>
+            <button type="button" class="btn btn-primary py-2 border-dark border-2 col-4" onclick="onKey('3')">3<div class="alt">DEF</div></button>
+        </div>
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary py-2 border-dark border-2 col-4" onclick="onKey('4')">4<div class="alt">GHI</div></button>
+            <button type="button" class="btn btn-primary py-2 border-dark border-2 col-4" onclick="onKey('5')">5<div class="alt">JKL</div></button>
+            <button type="button" class="btn btn-primary py-2 border-dark border-2 col-4" onclick="onKey('6')">6<div class="alt">MNO</div></button>
+        </div>
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary py-2 border-dark border-2 col-4" onclick="onKey('7')">7<div class="alt">PQRS</div></button>
+            <button type="button" class="btn btn-primary py-2 border-dark border-2 col-4" onclick="onKey('8')">8<div class="alt">TUV</div></button>
+            <button type="button" class="btn btn-primary py-2 border-dark border-2 col-4" onclick="onKey('9')">9<div class="alt">WXYZ</div></button>
+        </div>
+        <div class="btn-group">
+            <button type="button" class="btn btn-secondary py-2 border-dark border-2 col-4" onclick="onKey('*')">*</button>
+            <button type="button" class="btn btn-primary py-2 border-dark border-2 col-4" onclick="onKey('0')">0<div class="alt">OPER</div></button>
+            <button type="button" class="btn btn-secondary py-2 border-dark border-2 col-4" onclick="onKey('#')">#</button>
+        </div>
+        <div class="btn-group align-items-end">
+            <div class="border-dark text-muted border-2 col-8 align-items-end" id="status"></div>
+            <button type="button" class="btn btn-info py-2 border-dark border-2 col-4" onclick="onMute()" id="mute">Mute</button>
+        </div>
+    </div>
+</main>
+
+<audio id="ringtone" src="audio/ringtone.wav" loop></audio>
+<audio id="remote" autoplay></audio>
+
+</body>
+</html>

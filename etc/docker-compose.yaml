@@ -1,0 +1,54 @@
+version: "3.7"
+services:
+    # This image is built via slimswitch:
+    #   https://github.com/rtckit/slimswitch
+    #
+    # We're just bundling the modules used by Eqivo and this sandbox demo app.
+    # Built with (in the slimswitch repo directory):
+    #
+    # ./bin/mkslim.sh -m mod_event_socket -m mod_commands -m mod_dialplan_xml -m mod_dptools -m mod_sofia -m mod_tone_stream -m mod_sndfile -m mod_conference -m mod_flite -m mod_say_en -m mod_soundtouch -m mod_http_cache -m mod_shout -s rtckit/eqivo-sandbox-freeswitch
+    freeswitch:
+        image: rtckit/eqivo-sandbox-freeswitch
+        privileged: true
+        ports:
+            - "5060:5060"
+            - "5060:5060/udp"
+            - "5066:5066"
+            - "8021:8021"
+        volumes:
+            - ${PWD}/etc/freeswitch.xml:/etc/freeswitch/freeswitch.xml
+
+    eqivo:
+        image: rtckit/eqivo
+        ports:
+            - "8088:8088"
+        environment:
+            EQIVO_DEFAULT_ANSWER_URL: http://backend/entrypoint
+            EQIVO_REST_ALLOWED_IPS: 172.16.0.0/12
+            EQIVO_OUTBOUND_ADVERTISED_ADDRESS: inbound_socket_address
+            EQIVO_REST_AUTH_ID: dev
+            EQIVO_REST_AUTH_TOKEN: ChangeMeAPI
+            EQIVO_CORE_0: ChangeMeESL@freeswitch:8021
+
+    frontend:
+        image: nginx
+        ports:
+            - "8081:80"
+        volumes:
+            - ${PWD}/frontend:/usr/share/nginx/html
+
+    # Built with:
+    #
+    # docker build --network=host -f ./etc/Dockerfile.backend -t rtckit/eqivo-sandbox-backend ./backend
+    backend:
+        image: rtckit/eqivo-sandbox-backend
+        ports:
+            - "8082:80"
+        environment:
+            EQIVO_BASE_URL: http://eqivo:8088/v0.1/
+            EQIVO_REST_AUTH_ID: dev
+            EQIVO_REST_AUTH_TOKEN: ChangeMeAPI
+        volumes:
+            - ${PWD}/backend/src:/opt/backend/src
+        working_dir: /opt/backend
+        entrypoint: ["./node_modules/nodemon/bin/nodemon.js", "./src/index.js"]

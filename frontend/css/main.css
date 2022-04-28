@@ -1,0 +1,21 @@
+body {
+    background-color: #2e3336;
+    font-family: sans-serif;
+    color: #fff;
+}
+
+h1 {
+    color: #85b177;
+}
+
+a {
+    color: #85b177;
+}
+
+a:hover {
+    color: #85d377;
+}
+
+.btn .alt {
+    font-size: 10px;
+}

@@ -1,0 +1,59 @@
+<html>
+<head>
+    <title>Eqivo Sandbox</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<head>
+<body>
+
+<div class="col-lg-8 mx-auto p-3 py-md-5">
+    <main>
+        <h1>Eqivo Sandbox</h1>
+
+        <div class="row g-5">
+            <div class="col-md-6">
+                <p class="fs-5">Quickly and easily get started with Eqivo by exploring various scenarios.</p>
+                <ul>
+                    <li><a href="scenario/phone-menu.html">Phone menu (IVR)</a> - perform various actions triggered by caller input</li>
+                    <li><a href="scenario/click2call.html">Click to call</a> - bridge two parties via a XHR call</li>
+                    <li><a href="scenario/bitcoin.html">Bitcoin price</a> - example of a third party API integration</li>
+                    <li><a href="scenario/bitcoin-async.html">Bitcoin price (async)</a> - another take on third party API integrations</li>
+                </ul>
+            </div>
+
+            <div class="col-md-6">
+                <h2>Resources</h2>
+                <p>Learn more about Eqivo:</p>
+                <ul>
+                    <li><a href="https://eqivo.org">Website (documentation, API reference etc.)</a></li>
+                    <li><a href="https://github.com/rtckit/eqivo">Source code on GitHub</a></li>
+                    <li><a href="https://hub.docker.com/r/rtckit/eqivo">Docker image on DockerHub</a></li>
+                    <li><a href="https://web.archive.org/web/20171127130133/http://docs.plivo.org/">Legacy Framework documentation (archived)</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <hr class="col-3 col-md-2 mb-5">
+
+        <div class="row g-5">
+            <div class="col-md-12">
+                <h2>How does it work?</h2>
+                <p>If you're seeing this message in your browser, it means your Docker Compose cluster is up and running!</p>
+                <p>The components enumerated in <a href='https://github.com/rtckit/eqivo-sandbox/blob/main/etc/docker-compose.yaml'>etc/docker-compose.yaml</a> file are fulfilling various roles, akin to a production setup yet overly simplified:</p>
+                <ul>
+                    <li><i>freeswitch</i> - a generic FreeSWITCH server, customizable via <a target='_blank' href='https://github.com/rtckit/eqivo-sandbox/blob/main/etc/freeswitch.xml'>etc/freeswitch.xml</a></li>
+                    <li><i>eqivo</i> - the actual Eqivo application, configured via <a target='_blank' href='https://eqivo.org/#configuration'>environment variables</a></li>
+                    <li><i>frontend</i> - substitutes a public website; comes with a simple webRTC webphone to mimic PSTN interactions</li>
+                    <li><i>backend</i> - impersonates a simple application backend, written in academic node.js</li>
+                </ul>
+                <p>These components work together to achieve the goals set for each scenario; their source code is deliberately kept simple (naive) so the emphasis is on the Eqivo integration rather than being opinionated on how an application stack should be built.</p>
+                <p>The choice of a node.js environment for the backend is driven solely by its (current) popularity, you can use any environment able to send and receive HTTP calls.</p>
+                <p>Lastly, don't forget to grant the media permissions for your microphone before launching any of the provided scenarios!</p>
+            </div>
+        </div>
+    </main>
+</div>
+
+</body>
+</html>

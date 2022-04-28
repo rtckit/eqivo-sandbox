@@ -1,0 +1,9 @@
+FROM node:17
+
+RUN apt-get update && apt-get -y upgrade
+
+WORKDIR /opt/backend
+
+COPY package.json .
+
+RUN npm install
