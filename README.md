@@ -1,5 +1,7 @@
 # Programmable Voice scenarios built with Eqivo
 
+<img loading="lazy" src="https://raw.githubusercontent.com/rtckit/media/master/eqivo/eqivo-sandbox-shot.gif" alt="eqivo sandbox" class="width-full">
+
 Given the fairly complex nature of VoIP, integrating against platforms such as [Eqivo](https://eqivo.org) is not always straightforward, especially if compared against modern day web services. One has to configure at least a FreeSWITCH instance (for signalling and media handling) and then integrate their backend against Eqivo.
 
 The purpose of this repository is to demonstrate how one can integrate against Eqivo through a set of simple real life inspired scenarios.
@@ -18,6 +20,7 @@ First, clone (or even fork!) this repository:
 
 ```sh
 git clone https://github.com/rtckit/eqivo-sandbox.git
+cd eqivo-sandbox
 ```
 
 Then pull the necessary Docker images:
