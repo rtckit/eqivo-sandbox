@@ -1,14 +1,9 @@
 version: "3.7"
 services:
-    # This image is built via slimswitch:
-    #   https://github.com/rtckit/slimswitch
-    #
-    # We're just bundling the modules used by Eqivo and this sandbox demo app.
-    # Built with (in the slimswitch repo directory):
-    #
-    # ./bin/mkslim.sh -m mod_event_socket -m mod_commands -m mod_dialplan_xml -m mod_dptools -m mod_sofia -m mod_tone_stream -m mod_sndfile -m mod_conference -m mod_flite -m mod_say_en -m mod_soundtouch -m mod_http_cache -m mod_shout -s rtckit/eqivo-sandbox-freeswitch
+    # This image is built with slimswitch:
+    #   https://github.com/rtckit/eqivo/blob/main/etc/Dockerfile.freeswitch
     freeswitch:
-        image: rtckit/eqivo-sandbox-freeswitch
+        image: rtckit/eqivo-freeswitch:v1.10.7
         privileged: true
         ports:
             - "5060:5060"

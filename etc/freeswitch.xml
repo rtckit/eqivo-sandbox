@@ -25,6 +25,8 @@
                 <load module="mod_say_en" />
                 <load module="mod_shout" />
                 <load module="mod_soundtouch" />
+                <load module="mod_amd" />
+                <load module="mod_avmd" />
                 <!-- The following modules are not required by Eqivo but sandbox applications use them -->
                 <load module="mod_http_cache" />
             </modules>
