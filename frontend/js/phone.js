@@ -185,7 +185,7 @@ document.addEventListener("DOMContentLoaded", function () {
             ua.start();
         })
         .catch(function (err) {
-            window.alert("Ooops, we've be media access!");
+            window.alert("Ooops, we need media access!");
             elStatus.innerHTML = '<div class="alert alert-danger p-0">Media access error!</div>';
         });
 });
