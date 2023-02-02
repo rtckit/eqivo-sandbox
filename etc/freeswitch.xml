@@ -113,7 +113,7 @@
                 <condition field="destination_number" expression="^(.*)$">
                     <action application="info" />
                     <action application="enable_heartbeat" data="60" />
-                    <action application="socket" data="${eqivo_local_outbound_socket_address} async full" />
+                    <action application="socket" data="${ficore_local_outbound_socket_address} async full" />
                 </condition>
             </extension>
         </context>
