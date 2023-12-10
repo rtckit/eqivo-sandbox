@@ -3,7 +3,7 @@ services:
     # This image is built with slimswitch:
     #   https://github.com/rtckit/eqivo/blob/main/etc/Dockerfile.freeswitch
     freeswitch:
-        image: rtckit/eqivo-freeswitch:v1.10.8
+        image: rtckit/eqivo-freeswitch:v1.10.10
         privileged: true
         ports:
             - "5060:5060"
